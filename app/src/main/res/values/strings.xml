@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AppAsyncTask</string>
+    <string name="btn_consumir">Consumir Web Service</string>
+</resources>
