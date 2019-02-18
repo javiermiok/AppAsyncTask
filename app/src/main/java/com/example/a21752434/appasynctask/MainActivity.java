@@ -10,6 +10,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a21752434.appasynctask.data.Pokemon;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -74,7 +80,26 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            tvResultado.setText(resultado);
+            String salida = "";
+            JSONObject jsonObj = null;
+
+            try {
+                jsonObj = new JSONObject(resultado);
+                JSONArray jsonArrayPokemon = jsonObj.getJSONArray("results"); // es la clave que tiene el array del json de la pag https://pokeapi.co/api/v2/pokemon/
+
+                Pokemon pokeObj = null;
+
+                for (int i = 0; i < jsonArrayPokemon.length(); i++) {
+                    pokeObj = new Pokemon(jsonArrayPokemon.getJSONObject(i));
+                    salida += pokeObj;
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            tvResultado.setText(salida);
+            //tvResultado.setText(resultado); //Muestra el json sin formatear
         }
     }
 
